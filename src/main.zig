@@ -1,5 +1,5 @@
 const std = @import("std");
-const pdf = @import("pdf/object.zig");
+const pdf = @import("pdf/pdf.zig");
 
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){}; 
@@ -8,13 +8,13 @@ pub fn main() !void {
     const allocator = gpa.allocator();
     var stdout = std.io.getStdOut().writer();
 
-    var my_pdf = pdf.pdf(allocator);
-    defer my_pdf.deinit();
+    var my_objects = pdf.Objects.init(allocator);
+    defer my_objects.deinit();
 
     var bytes: [1024]u8 = undefined;
     var fixedBuffer = std.io.fixedBufferStream(&bytes);
     fixedBuffer.reset();
-    my_pdf.render(fixedBuffer.writer()) catch |err| { try stdout.print("err: {}\n", .{err}); };
+    my_objects.render(fixedBuffer.writer()) catch |err| { try stdout.print("err: {}\n", .{err}); };
     _ = try stdout.print("{s}", .{bytes});
 
 }
