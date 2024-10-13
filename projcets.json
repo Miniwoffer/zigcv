@@ -1,0 +1,17 @@
+[
+  {
+    "name": "libbloomfilter",
+    "url": "https://github.com/webcore-no/libbloomfilter",
+    "desc": "A lock-less multi process implementation of bloomfilter"
+  },
+  {
+    "name": "lua-handlebars",
+    "url": "https://github.com/webcore-no/lua-handlebars",
+    "desc": "A handlebar like templating framework written for and in lua"
+  },
+  {
+    "name": "this",
+    "url": "https://github.com/miniwoffer/zigcv",
+    "desc": "I created this cv using zig and my own simplifed pdf renderer"
+  }
+]

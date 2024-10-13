@@ -1,0 +1,33 @@
+[
+  {
+    "company": "ONE.COM",
+    "title": "Systems Engineer",
+    "desc": "Working on various componontes on a large hosting solution",
+    "start": 2022,
+    "technologies": ["c", "go", "postgres", "openresty", "ci/cd", "php", "openssl", "Linux", "libcontainer", "acme"]
+  },
+  {
+    "company": "Digital Garden AS",
+    "title": "Software Developer",
+    "desc": "Help develop a dedicated workpress hosting solution, from ground up",
+    "start": 2018,
+    "end": 2022,
+    "technologies": ["c", "postgres", "openresty", "uwsgi", "php", "openssl", "protobuff", "capnproto", "Linux", "ebpf"]
+  },
+  {
+    "company": "Freelance",
+    "title": "Software Developer",
+    "desc": "Various small jobs while studying",
+    "start": 2014,
+    "end": 2015,
+    "technologies": ["js", "ahk"]
+  },
+  {
+    "company": "Paandus",
+    "title": "Systems administrator",
+    "desc": "Managed a one server linux system, and did some website design.",
+    "start": 2013,
+    "end": 2014,
+    "technologies": [ "linux", "js", "html", "css", "c++", "mysql"]
+  }
+]
