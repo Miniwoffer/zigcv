@@ -45,12 +45,12 @@ pub fn main() !void {
     try writeKeyValue(writer, "editor", "neovim");
     try writeKeyValue(writer, "os", "Linux");
     try writeKeyValue(writer, "hobbies", "cooking, reading, having an old-house");
+    try writeKeyValue(writer, "languages", "norwegian, english");
     try experience.render(allocator, writer);
     try projects.render(allocator, writer);
 
 
     //TODO: fix this ugly manual aligment
-    try stream_renderer.writeln(writer, "");
     try stream_renderer.writeln(writer, "");
     try stream_renderer.writeln(writer, "");
     try stream_renderer.writeln(writer, "");
