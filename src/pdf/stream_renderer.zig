@@ -13,8 +13,8 @@ pub fn drawBackground(writer: anytype) !void {
 
 /// Sets the text cursor to the top left of the file and sets font and color
 pub fn initText(writer: anytype) !void {
-    _ = try writer.write("/F4 12 Tf\n");
-    _ = try writer.write("10 770 TD\n");
+    _ = try writer.write("/F4 14 Tf\n");
+    _ = try writer.write("10 774 TD\n");
     try resetColor(writer);
 }
 
@@ -59,7 +59,7 @@ pub fn writeln(writer: anytype, text: []const u8) !void {
 pub fn println(writer: anytype, comptime fmt: []const u8, args: anytype) !void {
     _ = try writer.print("(", .{});
     _ = try writer.print(fmt, args);
-    _ = try writer.print(") Tj\n0 -15 TD\n", .{});
+    _ = try writer.print(") Tj\n0 -18 TD\n", .{});
 }
 
 // This sholud be 80, but looks better with 120 -_(o_o)_-

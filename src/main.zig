@@ -19,8 +19,10 @@ const value_color = stream_renderer.Color{
 pub fn writeKeyValue(writer: anytype, key: []const u8, value: []const u8) !void {
     try stream_renderer.setColor(writer, key_color);
     try stream_renderer.print(writer, "{s}: ", .{ key });
+
     try stream_renderer.setColor(writer, value_color);
     try stream_renderer.println(writer, "{s}", .{ value });
+
     try stream_renderer.resetColor(writer);
 }
 
