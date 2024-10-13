@@ -12,6 +12,6 @@
   {
     "name": "this",
     "url": "https://github.com/miniwoffer/zigcv",
-    "desc": "I created this cv using zig and my own simplifed pdf renderer"
+    "desc": "I created this cv as an exericse in zig using only the standard library"
   }
 ]

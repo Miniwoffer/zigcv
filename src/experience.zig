@@ -37,12 +37,12 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
         }
         try stream_renderer.writeln(writer,"]");
         if (exp.end) |end| {
-            try stream_renderer.println(writer,"{d} -> {d}", .{exp.start, end});
+            try stream_renderer.println(writer,"  {d} -> {d}", .{exp.start, end});
         } else {
-            try stream_renderer.println(writer,"{d} -> today", .{exp.start});
+            try stream_renderer.println(writer,"  {d} -> today", .{exp.start});
         }
         try stream_renderer.setColor(writer, colors.Secondary);
-        try stream_renderer.println(writer,"{s}", .{exp.desc});
+        try stream_renderer.println(writer,"  {s}", .{exp.desc});
         try stream_renderer.resetColor(writer,);
         try stream_renderer.writeln(writer, "");
     }

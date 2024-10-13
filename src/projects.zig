@@ -28,7 +28,7 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
     for (parsed.value) |project| {
         try stream_renderer.println(writer,"[ {s} ] - {s}", .{project.name, project.url});
         try stream_renderer.setColor(writer, colors.Secondary);
-        try stream_renderer.println(writer,"{s}", .{project.desc});
+        try stream_renderer.println(writer,"    {s}", .{project.desc});
         try stream_renderer.resetColor(writer);
         try stream_renderer.writeln(writer,"");
     }
