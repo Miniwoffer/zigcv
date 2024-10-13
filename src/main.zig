@@ -11,6 +11,10 @@ pub fn main() !void {
     var my_objects = pdf.Objects.init(allocator);
     defer my_objects.deinit();
 
+    var my_page = pdf.Page.init(allocator);
+
+    try my_objects.addObject(&my_page);
+
     var bytes: [1024]u8 = undefined;
     var fixedBuffer = std.io.fixedBufferStream(&bytes);
     fixedBuffer.reset();
