@@ -14,7 +14,7 @@ const Projects = []Project;
 
 /// Renders projects.json
 pub fn render(allocator: Allocator, writer: anytype) !void {
-    const data = try std.fs.cwd().readFileAlloc(allocator, "./projcets.json", 1024);
+    const data = try std.fs.cwd().readFileAlloc(allocator, "./projects.json", 1024);
     defer allocator.free(data);
 
     const parsed = try std.json.parseFromSlice(Projects, allocator, data, .{.allocate = .alloc_always});
