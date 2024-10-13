@@ -23,3 +23,4 @@ main {
 
 Resources used:
 https://commandlinefanatic.com/cgi-bin/showarticle.cgi?article=art019
+https://stuff.mit.edu/afs/sipb/contrib/doc/specs/software/adobe/pdf/PDFReference16-v4.pdf
