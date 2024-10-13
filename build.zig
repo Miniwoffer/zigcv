@@ -35,6 +35,13 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    var opt = b.addOptions();
+    opt.addOption(
+        []const u8,
+        "git_commit",
+        b.option([]const u8, "git_commit", "Current git commit") orelse "Unknown",
+    );
+    exe.root_module.addImport("build_info", opt.createModule());
 
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default

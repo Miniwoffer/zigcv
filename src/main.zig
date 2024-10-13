@@ -2,28 +2,18 @@ const std = @import("std");
 const pdf = @import("pdf/pdf.zig");
 const projects = @import("projects.zig");
 const experience = @import("experience.zig");
+const colors = @import("colors.zig");
+const build_info = @import("build_info");
 
 const stream_renderer = @import("pdf/stream_renderer.zig");
 
-const key_color = stream_renderer.Color{
-    .r = 0.3,
-    .g = 1.0,
-    .b = 0.5,
-};
-
-const value_color = stream_renderer.Color{
-    .r = 0.8,
-    .g = 0.8,
-    .b = 0.8,
-};
 pub fn writeKeyValue(writer: anytype, key: []const u8, value: []const u8) !void {
-    try stream_renderer.setColor(writer, key_color);
+
+    try stream_renderer.setColor(writer, colors.Secondary);
     try stream_renderer.print(writer, "{s}: ", .{ key });
 
-    try stream_renderer.setColor(writer, value_color);
-    try stream_renderer.println(writer, "{s}", .{ value });
-
     try stream_renderer.resetColor(writer);
+    try stream_renderer.println(writer, "{s}", .{ value });
 }
 
 pub fn main() !void {
@@ -43,8 +33,9 @@ pub fn main() !void {
     try my_catalog.pages.addPage(&my_page);
 
     var writer = try my_page.contents.writer();
-    _ = try writer.write("BT");
-    try stream_renderer.drawBackground(writer);
+    _ = try writer.write("BT\n");
+    stream_renderer.setDefaultColor(colors.Primary);
+    try stream_renderer.drawBackground(writer, colors.Background);
     try stream_renderer.initText(writer);
     try writeKeyValue(writer, "name", "Odin Hultgren Van Der Horst");
     try writeKeyValue(writer, "e-mail", "odin@vanderhorst.no");
@@ -56,6 +47,25 @@ pub fn main() !void {
     try writeKeyValue(writer, "hobbies", "cooking, reading, having an old-house");
     try experience.render(allocator, writer);
     try projects.render(allocator, writer);
+
+
+    //TODO: fix this ugly manual aligment
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+
+    try writeKeyValue(writer, "Commit", build_info.git_commit);
+    try stream_renderer.println(writer, "You can look too see if its current at https://github.com/miniwoffer/zigcv and bulid a newer one with:", .{ });
+
+
+    try stream_renderer.setColor(writer, colors.Secondary);
+    try stream_renderer.println(writer, "$ nix run > output.pdf", .{ });
+    try stream_renderer.resetColor(writer);
+
     _ = try writer.write("ET");
     _ = try my_catalog.addToObjects(&my_objects);
 

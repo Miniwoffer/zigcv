@@ -2,9 +2,9 @@ const std = @import("std");
 
 
 /// Draws an almost black backgound for the entire file
-pub fn drawBackground(writer: anytype) !void {
-    // Set color to black
-    _ = try writer.write("0 0 0.1 rg\n");
+pub fn drawBackground(writer: anytype, color: Color) !void {
+    // Set color
+    try setColor(writer, color);
     // Draw rect
     _ = try writer.write("0 0 612 792 re\n");
     // Fill rect
@@ -13,16 +13,25 @@ pub fn drawBackground(writer: anytype) !void {
 
 /// Sets the text cursor to the top left of the file and sets font and color
 pub fn initText(writer: anytype) !void {
-    _ = try writer.write("/F4 14 Tf\n");
+    _ = try writer.write("/F4 12 Tf\n");
     _ = try writer.write("10 774 TD\n");
     try resetColor(writer);
 }
 
-const DefaultColor = Color{
+pub fn newline(writer: anytype) !void {
+    _ = try writer.write("0 -15 TD\n");
+}
+
+var DefaultColor = Color{
     .r = 0.3,
     .g = 1.0,
     .b = 0.5,
 };
+
+// TODO: dont do globals, make a contetxt
+pub fn setDefaultColor(color: Color) void {
+    DefaultColor = color;
+}
 
 pub fn resetColor(writer: anytype) !void {
     try setColor(writer, DefaultColor);
@@ -52,14 +61,15 @@ pub fn print(writer: anytype, comptime fmt: []const u8, args: anytype) !void {
 /// Writes a line of text to the content stream
 pub fn writeln(writer: anytype, text: []const u8) !void {
     try write(writer, text);
-    _ = try writer.write("0 -15 TD\n");
+    try newline(writer);
 }
 
 /// Writes a line of formated text to the content stream
 pub fn println(writer: anytype, comptime fmt: []const u8, args: anytype) !void {
     _ = try writer.print("(", .{});
     _ = try writer.print(fmt, args);
-    _ = try writer.print(") Tj\n0 -18 TD\n", .{});
+    _ = try writer.print(") Tj\n", .{});
+    try newline(writer);
 }
 
 // This sholud be 80, but looks better with 120 -_(o_o)_-

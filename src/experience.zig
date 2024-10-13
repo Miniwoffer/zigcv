@@ -1,6 +1,6 @@
 const std = @import("std");
 const stream_renderer = @import("pdf/stream_renderer.zig");
-
+const colors = @import("colors.zig");
 const Allocator = std.mem.Allocator;
 
 const Experience = struct {
@@ -28,7 +28,7 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
 
         try stream_renderer.write(writer,"[ ");
         for (exp.technologies,1..) | tech, i | {
-            try stream_renderer.setColor(writer, .{ .r=0.5, .g=0.5, .b=0.9 });
+            try stream_renderer.setColor(writer, colors.Tertiary);
             try stream_renderer.print(writer,"{s} ", .{ tech });
             try stream_renderer.resetColor(writer,);
             if (exp.technologies.len != i) {
@@ -41,7 +41,7 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
         } else {
             try stream_renderer.println(writer,"{d} -> today", .{exp.start});
         }
-        try stream_renderer.setColor(writer, .{ .r=0.8, .g=0.8, .b=0.9 });
+        try stream_renderer.setColor(writer, colors.Secondary);
         try stream_renderer.println(writer,"{s}", .{exp.desc});
         try stream_renderer.resetColor(writer,);
         try stream_renderer.writeln(writer, "");

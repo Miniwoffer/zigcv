@@ -170,7 +170,7 @@ pub const ContentStream = struct {
     pub fn init(allocator: Allocator) !Self {
         return .{
             .allocator = allocator,
-            .content = std.io.fixedBufferStream(try allocator.alloc(u8, 4096)),
+            .content = std.io.fixedBufferStream(try allocator.alloc(u8, 8192)),
         };
     }
     pub fn writer(self: *Self) !std.io.FixedBufferStream([]u8).Writer {
