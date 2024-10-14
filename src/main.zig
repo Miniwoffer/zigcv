@@ -19,11 +19,17 @@ pub fn writeKeyValue(writer: anytype, key: []const u8, value: []const u8) !void 
 }
 
 pub fn main() !void {
+
     var gpa = std.heap.GeneralPurposeAllocator(.{}){}; 
     defer std.debug.assert(gpa.deinit() == .ok);
 
     const allocator = gpa.allocator();
     var stdout = std.io.getStdOut().writer();
+
+    // Load the color scheme
+    if(build_info.theme_path) |path| {
+        try colors.loadFromFile(allocator, path);
+    }
 
     var my_objects = pdf.Objects.init(allocator);
     defer my_objects.deinit();

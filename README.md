@@ -4,11 +4,21 @@ to build:
 ```
 $ nix run > output.pdf
 ```
+or to build a ligth_theme version run:
+```
+$ nix run .#light_theme > output.pdf
+```
+You can also create your own theme in `./themes/` and running:
+```
+$ nix develop
+$ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.json run
+```
 
 ## TODO
 ### CV
- - [ ] Add monospaced fon
- - [ ] Add light mode scheme
+ - [ ] Add monospaced font
+ - [X] Add light mode scheme
+ - [ ] Setup gitlab ci to bulid CV
 ### Library
  - [X] Add support for fonts
  - [ ] Add support for embeding fonts

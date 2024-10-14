@@ -1,5 +1,6 @@
 const std = @import("std");
 
+const Allocator = std.mem.Allocator;
 
 /// Draws an almost black backgound for the entire file
 pub fn drawBackground(writer: anytype, color: Color) !void {
@@ -37,10 +38,40 @@ pub fn resetColor(writer: anytype) !void {
     try setColor(writer, DefaultColor);
 }
 
+fn colorBytetoFloat(b: u8) f16 {
+    return @as(f16, @floatFromInt(b))/255.0;
+}
+
 pub const Color = struct {
+    const Self = @This();
+
     r: f16,
     g: f16,
     b: f16,
+    pub fn jsonParse(allocator: Allocator, source: anytype, options: std.json.ParseOptions) std.json.ParseError(@TypeOf(source.*))!Self {
+        _ = allocator;
+        _ = options;
+        var buf:   [3]u8 = undefined;
+
+        switch (try source.next()) {
+            .string => |slice| {
+                if (slice.len != 7) {
+                    return std.json.ParseFromValueError.UnexpectedToken;
+                }
+                const out = std.fmt.hexToBytes(&buf, slice[1..]) catch return std.json.ParseFromValueError.UnexpectedToken;
+                if (out.len != 3) {
+                    return std.json.ParseFromValueError.UnexpectedToken;
+                }
+            },
+            else => return std.json.ParseFromValueError.UnexpectedToken,
+        }
+
+        return Self{
+            .r = colorBytetoFloat(buf[0]),
+            .g = colorBytetoFloat(buf[1]),
+            .b = colorBytetoFloat(buf[2]),
+        };
+    }
 };
 
 pub fn setColor(writer: anytype, color: Color) !void {

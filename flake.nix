@@ -56,6 +56,7 @@
 
       # nix run .
       apps.default = env.app [] "zig build -Dgit_commit=\"$(git rev-parse HEAD)\" run -- \"$@\"";
+      apps.light_theme = env.app [] "zig build -Dgit_commit=\"$(git rev-parse HEAD)\" -Dtheme_path=./themes/light.json run -- \"$@\"";
 
       # nix run .#build
       apps.build = env.app [] "zig build \"$@\"";
