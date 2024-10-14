@@ -6,7 +6,7 @@ const Allocator = std.mem.Allocator;
 const Experience = struct {
     company: []u8,
     title: []u8,
-    desc: []u8,
+    desc: [][]u8,
     start: u16,
     end: ?u16 = null,
     technologies: [][]u8,
@@ -16,7 +16,7 @@ const Experiences = []Experience;
 
 /// Renders experience.json
 pub fn render(allocator: Allocator, writer: anytype) !void {
-    const data = try std.fs.cwd().readFileAlloc(allocator, "./experience.json", 2048);
+    const data = try std.fs.cwd().readFileAlloc(allocator, "./experience.json", 4096);
     defer allocator.free(data);
 
     const parsed = try std.json.parseFromSlice(Experiences, allocator, data, .{.allocate = .alloc_always});
@@ -42,7 +42,9 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
             try stream_renderer.println(writer,"  {d} -> today", .{exp.start});
         }
         try stream_renderer.setColor(writer, colors.Secondary);
-        try stream_renderer.println(writer,"  {s}", .{exp.desc});
+        for (exp.desc) |d| {
+            try stream_renderer.println(writer," - {s}", .{ d });
+        }
         try stream_renderer.resetColor(writer,);
         try stream_renderer.writeln(writer, "");
     }

@@ -1,33 +1,52 @@
+
 [
   {
     "company": "ONE.COM",
     "title": "Systems Engineer",
-    "desc": "Working on various componontes on a large hosting solution",
+    "desc": [
+      "Collaborated in a flat team to maintain and optimize a large-scale hosting platform serving millions of users worldwide",
+      "Enhanced performance and reliability of high-throughput system components",
+      "Built comprehensive CI/CD pipelines and automated testing suites for various system components",
+      "Implemented improvements and advanced meta-programming techniques across multiple high-impact projects"
+    ],
     "start": 2022,
-    "technologies": ["c", "go", "postgres", "openresty", "ci/cd", "php", "openssl", "Linux", "libcontainer", "acme"]
+    "technologies": ["C", "Go", "PostgreSQL", "OpenResty", "CI/CD", "PHP", "OpenSSL", "Linux", "Libcontainer", "ACME"]
   },
   {
     "company": "Digital Garden AS",
     "title": "Software Developer",
-    "desc": "Help develop a dedicated workpress hosting solution, from ground up",
+    "desc": [
+      "Led the development of a dedicated WordPress hosting platform, delivering optimized and secure services",
+      "Set up and maintained version control, code hosting, and automated testing servers for the project, ensuring efficient workflows",
+      "Developed and optimized core features in uWSGI, PHP, OpenResty, PostgreSQL, and more to improve platform performance",
+      "Designed and built scalable applications using Rust, Go, C, Lua, and JavaScript",
+      "Contributed to the architecture and implementation of a robust user management system"
+    ],
     "start": 2018,
     "end": 2022,
-    "technologies": ["c", "postgres", "openresty", "uwsgi", "php", "openssl", "protobuff", "capnproto", "Linux", "ebpf"]
+    "technologies": ["C", "PostgreSQL", "OpenResty", "uWSGI", "PHP", "OpenSSL", "Protocol Buffers", "Cap’n Proto", "Linux", "eBPF"]
   },
   {
     "company": "Freelance",
     "title": "Software Developer",
-    "desc": "Various small jobs while studying",
+    "desc": [
+      "Refactored, improved and extended a suite of AutoHotkey scripts to improve efficiency for a customer",
+      "Developed a JavaScript application that generated images from webcams or photos for a ad campaign"
+    ],
     "start": 2014,
     "end": 2015,
-    "technologies": ["js", "ahk"]
+    "technologies": ["JavaScript", "AutoHotkey"]
   },
   {
-    "company": "Paandus",
-    "title": "Systems administrator",
-    "desc": "Managed a one server linux system, and did some website design.",
+    "company": "Paandus reklamebyrå as",
+    "title": "Systems Administrator",
+    "desc": [
+      "Managed and a Linux-based infrastructure for hosting websites and file storage, ensuring continuous uptime and backup",
+      "Contributed to minor graphical design work and supported website development with design implementation"
+    ],
     "start": 2013,
     "end": 2014,
-    "technologies": [ "linux", "js", "html", "css", "c++", "mysql"]
+    "technologies": ["Linux", "JavaScript", "HTML", "CSS", "C++", "MySQL"]
   }
 ]
+

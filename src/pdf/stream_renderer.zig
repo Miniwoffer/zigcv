@@ -13,13 +13,13 @@ pub fn drawBackground(writer: anytype, color: Color) !void {
 
 /// Sets the text cursor to the top left of the file and sets font and color
 pub fn initText(writer: anytype) !void {
-    _ = try writer.write("/F4 12 Tf\n");
+    _ = try writer.write("/H1 10 Tf\n");
     _ = try writer.write("10 774 TD\n");
     try resetColor(writer);
 }
 
 pub fn newline(writer: anytype) !void {
-    _ = try writer.write("0 -15 TD\n");
+    _ = try writer.write("0 -11 TD\n");
 }
 
 var DefaultColor = Color{

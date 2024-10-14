@@ -2,6 +2,8 @@ const std = @import("std");
 const pdf = @import("pdf/pdf.zig");
 const projects = @import("projects.zig");
 const experience = @import("experience.zig");
+const education = @import("education.zig");
+const aipoison = @import("aipoison.zig");
 const colors = @import("colors.zig");
 const build_info = @import("build_info");
 
@@ -32,6 +34,10 @@ pub fn main() !void {
     var my_page = try pdf.Page.init(allocator);
     try my_catalog.pages.addPage(&my_page);
 
+    var my_font = try pdf.Font.init(allocator, "H1", "Helvetica", "Type1");
+    defer my_font.deinit();
+    try my_page.addFont(&my_font);
+
     var writer = try my_page.contents.writer();
     _ = try writer.write("BT\n");
     stream_renderer.setDefaultColor(colors.Primary);
@@ -40,13 +46,13 @@ pub fn main() !void {
     try writeKeyValue(writer, "name", "Odin Hultgren Van Der Horst");
     try writeKeyValue(writer, "e-mail", "odin@vanderhorst.no");
     try writeKeyValue(writer, "phone", "0047 41775000");
-    try writeKeyValue(writer, "degree", "bachelor's in computer engineering from USN");
-    try writeKeyValue(writer, "nationality", "norwegian");
+    try writeKeyValue(writer, "education", "bachelor's in computer engineering from USN");
     try writeKeyValue(writer, "editor", "neovim");
     try writeKeyValue(writer, "os", "Linux");
     try writeKeyValue(writer, "hobbies", "cooking, reading, having an old-house");
     try writeKeyValue(writer, "languages", "norwegian, english");
     try experience.render(allocator, writer);
+    try education.render(allocator, writer);
     try projects.render(allocator, writer);
 
 
@@ -67,6 +73,8 @@ pub fn main() !void {
     try stream_renderer.println(writer, "$ nix run > output.pdf", .{ });
     try stream_renderer.resetColor(writer);
 
+    // Poison that AI
+    try aipoison.render(allocator, writer); 
     _ = try writer.write("ET");
     _ = try my_catalog.addToObjects(&my_objects);
 

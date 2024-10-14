@@ -19,6 +19,7 @@ const Object = union(enum) {
     pages: object(Pages),
     page: object(Page),
     contentStream: object(ContentStream),
+    font: object(Font),
 
     pub fn setLocation(self: *Object, location: u64) void {
         switch(self.*) {
@@ -183,13 +184,49 @@ pub const ContentStream = struct {
     pub fn render(self: *Self, wr: anytype) !void {
         const contents = self.content.getWritten();
 
-        try format(wr, "<<\n  /Legnth {}\n>>\nstream\n{s}endstream\n", .{ contents.len+1, contents });
+        try format(wr, "<<\n  /Length {d}\n>>\nstream\n{s}\nendstream\n", .{ contents.len, contents });
     }
 
     pub fn addToObjects(self: *Self, objects: *Objects) !void {
         if (self.obj) |_| return PDFError.ObjectOwned;
         self.obj = try objects.addObject(.{
             .contentStream = .{
+                .ptr = self
+            }
+        });
+    }
+};
+
+pub const Font = struct {
+   const Self = @This();
+
+    allocator: Allocator,
+    obj: ?*Object = null,
+    name: []const u8,
+    baseFont: []const u8,
+    subtype: []const u8,
+    
+    pub fn init(allocator: Allocator, name: []const u8, baseFont: []const u8, subtype: []const u8) !Self {
+        return .{
+            .allocator = allocator,
+            .name = name,
+            .baseFont = baseFont,
+            .subtype = subtype,
+        };
+    }
+    pub fn deinit(_: *Self) void {}
+
+    pub fn render(self: *Self, writer: anytype) !void {
+        try format(writer, "<<\n  /Type /Font\n", .{});
+        try format(writer, "  /Subtype /{s}\n", .{ self.subtype});
+        try format(writer, "  /BaseFont /{s}\n ", .{ self.baseFont});
+        try format(writer, ">>\n", .{});
+    }
+
+    pub fn addToObjects(self: *Self, objects: *Objects) !void {
+        if (self.obj) |_| return PDFError.ObjectOwned;
+        self.obj = try objects.addObject(.{
+            .font = .{
                 .ptr = self
             }
         });
@@ -204,22 +241,36 @@ pub const Page = struct {
     obj: ?*Object = null,
     contents: ContentStream,
     
+    fonts: std.ArrayList(*Font),
+    
     pub fn init(allocator: Allocator) !Self {
         return .{
             .allocator = allocator,
             .contents = try ContentStream.init(allocator),
+            .fonts = std.ArrayList(*Font).init(allocator),
         };
     }
     pub fn deinit(self: *Self) void {
         self.contents.deinit();
+        self.fonts.deinit();
     }
 
     pub fn render(self: *Self, writer: anytype) !void {
         try format(writer, "<<\n  /Type /Page\n", .{});
         try format(writer, "  /Parent 2 0 R\n", .{});
         try format(writer, "  /Contents ", .{});
-        try self.contents.obj.?.renderRef(writer);
+        try self.contents.obj.?.renderRef(writer); 
+        try format(writer, "  /Resources <<\n    /Font <<\n", .{});
+        for (self.fonts.items) |font| {
+            try format(writer, "      /{s} ", .{font.name});
+            try font.obj.?.renderRef(writer);
+        }
+        try format(writer, "      >>\n    >>", .{});
         try format(writer, ">>\n", .{});
+    }
+
+    pub fn addFont(self: *Self, font: *Font) !void {
+        try self.fonts.append(font);
     }
 
     pub fn addToObjects(self: *Self, objects: *Objects) !void {
@@ -230,6 +281,9 @@ pub const Page = struct {
             }
         });
         try self.contents.addToObjects(objects);
+        for (self.fonts.items) |font| {
+            try font.addToObjects(objects);
+        }
     }
 };
 

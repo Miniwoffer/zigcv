@@ -1,0 +1,15 @@
+[
+  {
+    "school": {
+      "short": "USN",
+      "long": "The University of Southeast Norway" 
+    },
+    "title": "Bachelor's in engineering",
+    "field": "computer engineering",
+    "start": 2016,
+    "end": 2020,
+    "notes": [
+      "A founding member of BITS the student association for 'IT' and 'Computer Engineering' at Campus Vestfold"
+    ]
+  }
+]
