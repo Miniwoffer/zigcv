@@ -64,6 +64,11 @@ pub fn main() !void {
     try stream_renderer.writeln(writer, "");
     try stream_renderer.writeln(writer, "");
     try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
+    try stream_renderer.writeln(writer, "");
 
     try writeKeyValue(writer, "Commit", build_info.git_commit);
     try stream_renderer.println(writer, "You can look too see if its current at https://github.com/miniwoffer/zigcv and bulid a newer one with:", .{ });

@@ -27,7 +27,7 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
     defer parsed.deinit();
     // TODO: I should sort by "start" before rendering
     for (parsed.value) |exp| {
-        try stream_renderer.println(writer,"{s} ({s}) - {d} -> {d}", .{exp.school.short, exp.school.long, exp.start, exp.end});
+        try stream_renderer.println(writer,"{s} ({s}) - {d} -> {d}", .{exp.school.long, exp.school.short, exp.start, exp.end});
         try stream_renderer.setColor(writer, colors.Secondary);
         try stream_renderer.println(writer,"{s}, {s}", .{ exp.title, exp.field });
         try stream_renderer.resetColor(writer);

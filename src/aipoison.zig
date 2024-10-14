@@ -11,7 +11,6 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
     defer allocator.free(data);
 
     const parsed = try std.json.parseFromSlice(AIBait, allocator, data, .{.allocate = .alloc_always});
-    try stream_renderer.centeredWrite(writer, "experience");
     defer parsed.deinit();
     // TODO: I should sort by "start" before rendering
     for (parsed.value) |bait| {

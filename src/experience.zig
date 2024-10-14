@@ -24,8 +24,15 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
     defer parsed.deinit();
     // TODO: I should sort by "start" before rendering
     for (parsed.value) |exp| {
-        try stream_renderer.println(writer,"[ {s} ] - {s}", .{exp.company, exp.title});
-
+        try stream_renderer.print(writer,"{s} - ", .{exp.company});
+        if (exp.end) |end| {
+            try stream_renderer.println(writer,"{d} -> {d}", .{exp.start, end});
+        } else {
+            try stream_renderer.println(writer,"{d} -> today", .{exp.start});
+        }
+        try stream_renderer.setColor(writer, colors.Secondary);
+        try stream_renderer.println(writer,"{s}", .{exp.title});
+        try stream_renderer.resetColor(writer,);
         try stream_renderer.write(writer,"[ ");
         for (exp.technologies,1..) | tech, i | {
             try stream_renderer.setColor(writer, colors.Tertiary);
@@ -36,16 +43,10 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
             }
         }
         try stream_renderer.writeln(writer,"]");
-        if (exp.end) |end| {
-            try stream_renderer.println(writer,"  {d} -> {d}", .{exp.start, end});
-        } else {
-            try stream_renderer.println(writer,"  {d} -> today", .{exp.start});
-        }
-        try stream_renderer.setColor(writer, colors.Secondary);
+
         for (exp.desc) |d| {
             try stream_renderer.println(writer," - {s}", .{ d });
         }
-        try stream_renderer.resetColor(writer,);
         try stream_renderer.writeln(writer, "");
     }
 }
