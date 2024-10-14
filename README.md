@@ -7,16 +7,16 @@ $ nix run > output.pdf
 
 ## TODO
 ### CV
- [ ] Add monospaced fon
- [ ] Add light mode scheme
+ - [ ] Add monospaced fon
+ - [ ] Add light mode scheme
 ### Library
- [X] Add support for fonts
- [ ] Add support for embeding fonts
- [ ] Add support for newlines in the stream_renderer
- [ ] Center "non-comptime" text
- [ ] Seperate out the pdf renderer and make it a real lib
- [ ] Dynamic scaling buffer for content_stream
- [ ] Draw images
+ - [X] Add support for fonts
+ - [ ] Add support for embeding fonts
+ - [ ] Add support for newlines in the stream_renderer
+ - [ ] Center "non-comptime" text
+ - [ ] Seperate out the pdf renderer and make it a real lib
+ - [ ] Dynamic scaling buffer for content_stream
+ - [ ] Draw images
 
 ## Some of the resources used
  - https://commandlinefanatic.com/cgi-bin/showarticle.cgi?article=art019
