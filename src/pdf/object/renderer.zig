@@ -104,7 +104,8 @@ pub const Type = union(enum) {
         }
     }
     pub fn render(self: *Self, writer: anytype) !void {
-        return _render(self, writer, 0);
+        try _render(self, writer, 0);
+        _ = try writer.write("\n");
     }
 };
 
@@ -130,7 +131,7 @@ test "Test rendering" {
     try t.dict.put("Integer", .{ .integer = -32 });
     try t.dict.put("NegativeInteger", .{ .integer = 41 });
 
-    try t.render(fbs.writer());
+    try t._render(fbs.writer(), 0);
     //TODO: there are no garantees on the order, so i should either sort output or find another comp function
     try std.testing.expectEqualStrings(
         \\<<

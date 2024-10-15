@@ -31,12 +31,7 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
  - [ ] Dynamic scaling buffer for content_stream
  - [ ] Draw images
  - [ ] Rewrite content_stream renderer to be "command" based
- - [ ] Use new renderer
-  - [X] catalog
-  - [X] content_stream 
-  - [X] font
-  - [X] pages
-  - [ ] page
+ - [X] Use new renderer
 
 ## Some of the resources used
  - https://commandlinefanatic.com/cgi-bin/showarticle.cgi?article=art019
