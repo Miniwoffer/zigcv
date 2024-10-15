@@ -27,6 +27,7 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
  - [ ] Seperate out the pdf renderer and make it a real lib
  - [ ] Dynamic scaling buffer for content_stream
  - [ ] Draw images
+ - [ ] Rewrite content_stream renderer to be "command" based
  - [ ] Use new renderer
   - [ ] catalog
   - [ ] content_stream 
