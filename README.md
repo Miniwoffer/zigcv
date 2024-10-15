@@ -23,6 +23,7 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
  - [ ] Write "ReadJSONFile" util
 ### Library
  - [X] Add support for fonts
+ - [ ] Add "zig fmt" test
  - [ ] Add support for embeding fonts
  - [ ] Add support for newlines in the stream_renderer
  - [ ] Center "non-comptime" text
@@ -34,7 +35,7 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
   - [X] catalog
   - [X] content_stream 
   - [X] font
-  - [ ] pages
+  - [X] pages
   - [ ] page
 
 ## Some of the resources used

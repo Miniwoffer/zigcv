@@ -44,7 +44,7 @@ pub const Object = union(enum) {
         }
     }
 
-    pub fn renderRef(self: *Object, writer: anytype) !void {
+    pub fn renderRef(self: *const Object, writer: anytype) !void {
         switch (self.*) {
             inline else => |*o| return o.renderRef(writer),
         }
@@ -69,7 +69,7 @@ fn object(comptime child_type: type) type {
         /// undefined until state is Rendered
         location: u64 = undefined,
 
-        pub fn renderRef(self: *Self, writer: anytype) !void {
+        pub fn renderRef(self: *const Self, writer: anytype) !void {
             try format(writer, "{d} {d} R", .{ self.id, self.generation });
         }
 

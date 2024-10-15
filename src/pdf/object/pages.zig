@@ -1,17 +1,19 @@
 const std = @import("std");
 const object = @import("../object.zig");
+const renderer = @import("renderer.zig");
 
+const Type = renderer.Type;
+const Rectangle = renderer.Type;
+const format = std.fmt.format;
 const Allocator = std.mem.Allocator;
 const FixedBufferStream = std.io.FixedBufferStream;
-
-const format = std.fmt.format;
 
 pub const Pages = struct {
     const Self = @This();
     allocator: Allocator,
     items: std.ArrayList(*object.Page),
     obj: ?*object.Object = null,
-    
+    boundingBox: [4]i64 = [4]i64{0,0,612,792}, 
     
     pub fn init(allocator: Allocator) Self {
         return .{
@@ -44,15 +46,25 @@ pub const Pages = struct {
     }
 
     pub fn render(self: *Self, writer: anytype) !void {
-        try format(writer, "<<\n  /Type /Pages\n", .{});
-        try format(writer, "  /Count {d}\n", .{ self.items.items.len });
-        try format(writer, "  /MediaBox [0 0 612 792]\n", .{});
-        try format(writer, "  /Kids [\n", .{});
-        for (self.items.items) |page| {
-            try format(writer, "    ", .{});
-            try page.obj.?.renderRef(writer);
+        var t = Type{.dict = .init(self.allocator)};
+        defer t.dict.deinit();
+        
+        try t.dict.put("Type", .{ .name = "Pages" }); 
+        try t.dict.put("Count", .{ .integer = @intCast(self.items.items.len) });
+        try t.dict.put("MediaBox", .{ .array = &[_]Type{
+            .{ .integer = self.boundingBox[0]},
+            .{ .integer = self.boundingBox[1]},
+            .{ .integer = self.boundingBox[2]},
+            .{ .integer = self.boundingBox[3]},
+        }});
+
+        var kids = try self.allocator.alloc(Type, self.items.items.len);
+        defer self.allocator.free(kids);
+        for (self.items.items,0..) |page, i| {
+            kids[i] = .{ .ref = page.obj.? };
         }
-        try format(writer, "  ]\n", .{});
-        try format(writer, ">>\n", .{});
+        try t.dict.put("Kids", .{ .array = kids });
+        try t.render(writer);
     }
 };
+

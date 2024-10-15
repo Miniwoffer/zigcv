@@ -32,7 +32,7 @@ fn isName(name: []const u8) bool {
 }
 
 pub const Type = union(enum) {
-    ref: *object.Object,
+    ref: *const object.Object,
     boolean: bool,
     float: f64,
     integer: i64,
