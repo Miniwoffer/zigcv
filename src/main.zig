@@ -1,5 +1,5 @@
 const std = @import("std");
-const pdf = @import("pdf/pdf.zig");
+const pdf = @import("pdf/object.zig");
 const projects = @import("projects.zig");
 const experience = @import("experience.zig");
 const education = @import("education.zig");
