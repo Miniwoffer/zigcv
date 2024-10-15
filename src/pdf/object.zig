@@ -83,9 +83,17 @@ fn object(comptime child_type: type) type {
     };
 }
 pub const Objects = struct {
+    id: struct {
+        permanent: []const u8,
+        dynamic: []const u8,
+    } = .{
+        .permanent = "zigcv",
+        .dynamic = "foobar",
+    },
     allocator: Allocator,
     objects: std.ArrayList(*Object),
     const Self = @This();
+
 
     pub fn init(allocator: Allocator) Self {
         return .{
@@ -130,7 +138,7 @@ pub const Objects = struct {
         for (self.objects.items) |obj| {
             try format(wr, "{d:0>10} {d:0>5} n\n", .{ obj.getLocation(), obj.getGeneration() });
         }
-        _ = try wr.write("trailer");
+        _ = try wr.write("trailer\n");
 
         var t = Type{.dict = .init(self.allocator)};
         defer t.dict.deinit();
@@ -139,8 +147,8 @@ pub const Objects = struct {
         try t.dict.put("Size", .{ .integer = @intCast(xref_count) });
         try t.dict.put("ID", .{
             .array = &[_]Type{
-                .{.hexEncodedString = "foobar"},
-                .{.hexEncodedString = "foobar"},
+                .{.hexEncodedString = self.id.permanent},
+                .{.hexEncodedString = self.id.dynamic},
             }
         });
 
