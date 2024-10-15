@@ -34,11 +34,11 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
  - [X] Use new renderer
  - [ ] Add null support for indirect referance
  - [ ] Extend objects too support all entries in PDF 16
-  - [ ] catalog
-  - [ ] content_stream
-  - [ ] font
-  - [ ] pages
-  - [ ] page
+   - [ ] catalog
+   - [ ] content_stream
+   - [ ] font
+   - [ ] pages
+   - [ ] page
 
 ## Some of the resources used
  - https://commandlinefanatic.com/cgi-bin/showarticle.cgi?article=art019
