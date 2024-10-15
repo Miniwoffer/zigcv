@@ -1,9 +1,11 @@
 const std = @import("std");
+
 pub const Catalog = @import("object/catalog.zig").Catalog;
 pub const Pages = @import("object/pages.zig").Pages;
 pub const Page = @import("object/page.zig").Page;
 pub const ContentStream = @import("object/content_stream.zig").ContentStream;
 pub const Font = @import("object/font.zig").Font;
+const Type = @import("object/renderer.zig").Type;
 
 const Allocator = std.mem.Allocator;
 const FixedBufferStream = std.io.FixedBufferStream;
@@ -128,16 +130,24 @@ pub const Objects = struct {
         for (self.objects.items) |obj| {
             try format(wr, "{d:0>10} {d:0>5} n\n", .{ obj.getLocation(), obj.getGeneration() });
         }
-        _ = try wr.write("trailer\n<<\n");
-        try format(wr, "  /Size {d}\n", .{xref_count});
-        // TODO: hash the everything writen util now and use that
-        const id = "01234567890ABCDEF";
-        try format(wr, "  /ID [<{0s}> <{0s}>]\n", .{id});
+        _ = try wr.write("trailer");
 
-        // For now we just expect the catalog to be object number 1 0
-        try format(wr, "  /Root 1 0 R\n", .{});
-        _ = try wr.write(">>\n");
+        var t = Type{.dict = .init(self.allocator)};
+        defer t.dict.deinit();
 
+
+        try t.dict.put("Size", .{ .integer = @intCast(xref_count) });
+        try t.dict.put("ID", .{
+            .array = &[_]Type{
+                .{.hexEncodedString = "foobar"},
+                .{.hexEncodedString = "foobar"},
+            }
+        });
+
+        //TODO: Check if catalog needs to be first element
+        try t.dict.put("Root", .{ .ref = self.objects.items[0] });
+
+        try t.render(writer);
         // Write pointer to xref
         try format(wr, "startxref\n{d}\n%%EOF", .{xref_start});
     }

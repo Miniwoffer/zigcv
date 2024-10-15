@@ -14,7 +14,7 @@ pub const Catalog = struct {
     allocator: Allocator,
     pages: object.Pages,
     obj: ?*object.Object = null,
- 
+
     pub fn init(allocator: Allocator) Self {
         return .{
             .allocator = allocator,
@@ -27,18 +27,13 @@ pub const Catalog = struct {
 
     pub fn addToObjects(self: *Self, objects: *object.Objects) !void {
         if (self.obj) |_| return object.Error.ObjectOwned;
-        self.obj = try objects.addObject(.{
-            .catalog = .{
-                .ptr = self
-            }
-        });
+        self.obj = try objects.addObject(.{ .catalog = .{ .ptr = self } });
         try self.pages.addToObjects(objects);
-
     }
     pub fn render(self: *Self, writer: anytype) !void {
-        var t = Type{.dict = .init(self.allocator)};
+        var t = Type{ .dict = .init(self.allocator) };
         defer t.dict.deinit();
-        
+
         try t.dict.put("Type", .{ .name = "Catalog" });
         try t.dict.put("Pages", .{ .ref = self.pages.obj.? });
         try t.render(writer);
