@@ -19,6 +19,8 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
  - [ ] Add monospaced font
  - [X] Add light mode scheme
  - [ ] Setup gitlab ci to bulid CV
+ - [ ] Move content into a folder
+ - [ ] Write "ReadJSONFile" util
 ### Library
  - [X] Add support for fonts
  - [ ] Add support for embeding fonts
