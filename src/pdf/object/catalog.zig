@@ -1,8 +1,10 @@
 const std = @import("std");
 const object = @import("../object.zig");
+const renderer = @import("renderer.zig");
 
 const Allocator = std.mem.Allocator;
 const FixedBufferStream = std.io.FixedBufferStream;
+const Type = renderer.Type;
 
 const format = std.fmt.format;
 
@@ -34,10 +36,11 @@ pub const Catalog = struct {
 
     }
     pub fn render(self: *Self, writer: anytype) !void {
-        //TODO: implement this real like
-        try format(writer, "<<\n  /Type /Catalog\n", .{});
-        try format(writer, "  /Pages ", .{});
-        try self.pages.obj.?.renderRef(writer);
-        try format(writer, ">>\n", .{});
+        var t = Type{.dict = .init(self.allocator)};
+        defer t.dict.deinit();
+        
+        try t.dict.put("Type", .{ .name = "Catalog" });
+        try t.dict.put("Pages", .{ .ref = self.pages.obj.? });
+        try t.render(writer);
     }
 };

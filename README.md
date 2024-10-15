@@ -31,7 +31,7 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
  - [ ] Draw images
  - [ ] Rewrite content_stream renderer to be "command" based
  - [ ] Use new renderer
-  - [ ] catalog
+  - [X] catalog
   - [ ] content_stream 
   - [X] font
   - [ ] pages
