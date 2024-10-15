@@ -32,7 +32,7 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
  - [ ] Rewrite content_stream renderer to be "command" based
  - [ ] Use new renderer
   - [X] catalog
-  - [ ] content_stream 
+  - [X] content_stream 
   - [X] font
   - [ ] pages
   - [ ] page

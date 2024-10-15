@@ -34,8 +34,8 @@ fn isName(name: []const u8) bool {
 pub const Type = union(enum) {
     ref: *object.Object,
     boolean: bool,
-    float: f32,
-    integer: i32,
+    float: f64,
+    integer: i64,
     name: []const u8,
     literalString: []const u8,
     hexEncodedString: []const u8,

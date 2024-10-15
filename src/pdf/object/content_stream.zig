@@ -1,6 +1,8 @@
 const std = @import("std");
 const object = @import("../object.zig");
+const renderer = @import("renderer.zig");
 
+const Type = renderer.Type;
 const Allocator = std.mem.Allocator;
 const FixedBufferStream = std.io.FixedBufferStream;
 
@@ -29,8 +31,14 @@ pub const ContentStream = struct {
 
     pub fn render(self: *Self, wr: anytype) !void {
         const contents = self.content.getWritten();
+        var t = Type{.dict = .init(self.allocator)};
+        defer t.dict.deinit();
+        
+        try t.dict.put("Length", .{ .integer = @intCast(contents.len) });
+        try t.render(wr);
 
-        try format(wr, "<<\n  /Length {d}\n>>\nstream\n{s}\nendstream\n", .{ contents.len, contents });
+        //TODO: write a new renderer for this
+        try format(wr, "stream\n{s}\nendstream\n", .{ contents });
     }
 
     pub fn addToObjects(self: *Self, objects: *object.Objects) !void {
