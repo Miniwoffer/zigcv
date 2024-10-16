@@ -1,4 +1,4 @@
-name: "Check formating"
+name: "unittest"
 on:
   pull_request:
   push:

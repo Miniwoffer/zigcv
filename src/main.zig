@@ -1,4 +1,3 @@
-
 const std = @import("std");
 const pdf = @import("pdf/object.zig");
 const projects = @import("projects.zig");
