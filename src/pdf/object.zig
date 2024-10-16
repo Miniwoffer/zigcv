@@ -94,7 +94,6 @@ pub const Objects = struct {
     objects: std.ArrayList(*Object),
     const Self = @This();
 
-
     pub fn init(allocator: Allocator) Self {
         return .{
             .objects = std.ArrayList(*Object).init(allocator),
@@ -140,17 +139,14 @@ pub const Objects = struct {
         }
         _ = try wr.write("trailer\n");
 
-        var t = Type{.dict = .init(self.allocator)};
+        var t = Type{ .dict = .init(self.allocator) };
         defer t.dict.deinit();
 
-
         try t.dict.put("Size", .{ .integer = @intCast(xref_count) });
-        try t.dict.put("ID", .{
-            .array = &[_]Type{
-                .{.hexEncodedString = self.id.permanent},
-                .{.hexEncodedString = self.id.dynamic},
-            }
-        });
+        try t.dict.put("ID", .{ .array = &[_]Type{
+            .{ .hexEncodedString = self.id.permanent },
+            .{ .hexEncodedString = self.id.dynamic },
+        } });
 
         //TODO: Check if catalog needs to be first element
         try t.dict.put("Root", .{ .ref = self.objects.items[0] });

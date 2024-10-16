@@ -67,6 +67,12 @@
       # nix run .#docs
       apps.docs = env.app [] "zig build docs -- \"$@\"";
 
+      # nix run .#fmt
+      apps.fmt = env.app [] "zig fmt . \"$@\"";
+
+      # nix run .#fmt --check
+      apps.fmt = env.app [] "zig fmt . --check \"$@\"";
+
       # nix run .#deps
       apps.deps = env.showExternalDeps;
 

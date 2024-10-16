@@ -19,33 +19,37 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
     const data = try std.fs.cwd().readFileAlloc(allocator, "./data/experience.json", 4096);
     defer allocator.free(data);
 
-    const parsed = try std.json.parseFromSlice(Experiences, allocator, data, .{.allocate = .alloc_always});
+    const parsed = try std.json.parseFromSlice(Experiences, allocator, data, .{ .allocate = .alloc_always });
     try stream_renderer.centeredWrite(writer, "experience");
     defer parsed.deinit();
     // TODO: I should sort by "start" before rendering
     for (parsed.value) |exp| {
-        try stream_renderer.print(writer,"{s} - ", .{exp.company});
+        try stream_renderer.print(writer, "{s} - ", .{exp.company});
         if (exp.end) |end| {
-            try stream_renderer.println(writer,"{d} -> {d}", .{exp.start, end});
+            try stream_renderer.println(writer, "{d} -> {d}", .{ exp.start, end });
         } else {
-            try stream_renderer.println(writer,"{d} -> today", .{exp.start});
+            try stream_renderer.println(writer, "{d} -> today", .{exp.start});
         }
         try stream_renderer.setColor(writer, colors.Secondary);
-        try stream_renderer.println(writer,"{s}", .{exp.title});
-        try stream_renderer.resetColor(writer,);
-        try stream_renderer.write(writer,"[ ");
-        for (exp.technologies,1..) | tech, i | {
+        try stream_renderer.println(writer, "{s}", .{exp.title});
+        try stream_renderer.resetColor(
+            writer,
+        );
+        try stream_renderer.write(writer, "[ ");
+        for (exp.technologies, 1..) |tech, i| {
             try stream_renderer.setColor(writer, colors.Tertiary);
-            try stream_renderer.print(writer,"{s} ", .{ tech });
-            try stream_renderer.resetColor(writer,);
+            try stream_renderer.print(writer, "{s} ", .{tech});
+            try stream_renderer.resetColor(
+                writer,
+            );
             if (exp.technologies.len != i) {
-                try stream_renderer.write(writer,"| ");
+                try stream_renderer.write(writer, "| ");
             }
         }
-        try stream_renderer.writeln(writer,"]");
+        try stream_renderer.writeln(writer, "]");
 
         for (exp.desc) |d| {
-            try stream_renderer.println(writer," - {s}", .{ d });
+            try stream_renderer.println(writer, " - {s}", .{d});
         }
         try stream_renderer.writeln(writer, "");
     }

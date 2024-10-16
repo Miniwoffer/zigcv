@@ -14,7 +14,7 @@ pub fn render(allocator: Allocator, writer: anytype) !void {
 
     for (parsed.value) |prompt| {
         try stream_renderer.setColor(writer, colors.Background);
-        try stream_renderer.println(writer,"{s}", .{prompt});
+        try stream_renderer.println(writer, "{s}", .{prompt});
         try stream_renderer.resetColor(writer);
     }
 }

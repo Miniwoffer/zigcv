@@ -23,7 +23,7 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
  - [X] Write "ReadJSONFile" util
 ### Library
  - [X] Add support for fonts
- - [ ] Add "zig fmt" test
+ - [X] Add "zig fmt" test
  - [ ] Add support for embeding fonts
  - [ ] Add support for newlines in the stream_renderer
  - [ ] Center "non-comptime" text
@@ -32,6 +32,7 @@ $ zig build -Dgit_commit=$(git rev-parse HEAD) -Dtheme_path=./themes/<my_theme>.
  - [ ] Draw images
  - [ ] Rewrite content_stream renderer to be "command" based
  - [X] Use new renderer
+ - [ ] Change naming of "render" to "serialize"
  - [ ] Add null support for indirect referance
  - [ ] Extend objects too support all entries in PDF 16
    - [ ] catalog

@@ -39,7 +39,7 @@ pub fn resetColor(writer: anytype) !void {
 }
 
 fn colorBytetoFloat(b: u8) f16 {
-    return @as(f16, @floatFromInt(b))/255.0;
+    return @as(f16, @floatFromInt(b)) / 255.0;
 }
 
 pub const Color = struct {
@@ -51,7 +51,7 @@ pub const Color = struct {
     pub fn jsonParse(allocator: Allocator, source: anytype, options: std.json.ParseOptions) std.json.ParseError(@TypeOf(source.*))!Self {
         _ = allocator;
         _ = options;
-        var buf:   [3]u8 = undefined;
+        var buf: [3]u8 = undefined;
 
         switch (try source.next()) {
             .string => |slice| {
@@ -75,7 +75,7 @@ pub const Color = struct {
 };
 
 pub fn setColor(writer: anytype, color: Color) !void {
-    _ = try writer.print("{d} {d} {d} rg\n", .{ color.r, color.g, color.b } );
+    _ = try writer.print("{d} {d} {d} rg\n", .{ color.r, color.g, color.b });
 }
 
 /// Writes a line of text to the content stream
@@ -107,7 +107,7 @@ pub fn println(writer: anytype, comptime fmt: []const u8, args: anytype) !void {
 const width = 120;
 /// Write some text and padding the sides until it is width
 pub fn centeredWrite(writer: anytype, comptime text: []const u8) !void {
-    const lpad = comptime (width - 2 - text.len)/2;
+    const lpad = comptime (width - 2 - text.len) / 2;
     const rpad = comptime width - 2 - text.len - lpad;
-    _ = try println(writer, "{s} {s} {s}", .{"-" ** lpad, text, "-" ** rpad});
+    _ = try println(writer, "{s} {s} {s}", .{ "-" ** lpad, text, "-" ** rpad });
 }

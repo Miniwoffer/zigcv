@@ -12,14 +12,14 @@ const Error = object.Error;
 const Type = renderer.Type;
 
 pub const Font = struct {
-   const Self = @This();
+    const Self = @This();
 
     allocator: Allocator,
     obj: ?*Object = null,
     name: []const u8,
     baseFont: []const u8,
     subtype: []const u8,
-    
+
     pub fn init(allocator: Allocator, name: []const u8, baseFont: []const u8, subtype: []const u8) !Self {
         return .{
             .allocator = allocator,
@@ -31,7 +31,7 @@ pub const Font = struct {
     pub fn deinit(_: *Self) void {}
 
     pub fn render(self: *Self, writer: anytype) !void {
-        var t = Type{.dict = .init(self.allocator)};
+        var t = Type{ .dict = .init(self.allocator) };
         defer t.dict.deinit();
 
         try t.dict.put("Type", .{ .name = "Font" });
@@ -42,12 +42,6 @@ pub const Font = struct {
 
     pub fn addToObjects(self: *Self, objects: *Objects) !void {
         if (self.obj) |_| return Error.ObjectOwned;
-        self.obj = try objects.addObject(.{
-            .font = .{
-                .ptr = self
-            }
-        });
+        self.obj = try objects.addObject(.{ .font = .{ .ptr = self } });
     }
 };
-
-

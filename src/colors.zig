@@ -4,9 +4,8 @@ const build_info = @import("build_info");
 const Allocator = std.mem.Allocator;
 const Color = stream_renderer.Color;
 
-
 fn colorBytetoFloat(b: u8) f16 {
-    return @as(f16, @floatFromInt(b))/255.0;
+    return @as(f16, @floatFromInt(b)) / 255.0;
 }
 
 const Scheme = struct {
@@ -19,16 +18,15 @@ const Scheme = struct {
 pub fn loadFromFile(allocator: Allocator, path: []const u8) !void {
     const data = try std.fs.cwd().readFileAlloc(allocator, path, 4096);
     defer allocator.free(data);
-    const parsed = try std.json.parseFromSlice(Scheme, allocator, data, .{.allocate = .alloc_always});
+    const parsed = try std.json.parseFromSlice(Scheme, allocator, data, .{ .allocate = .alloc_always });
     defer parsed.deinit();
 
     //TODO: Don't use globals, implement some kind of context object
     const val = parsed.value;
     Background = val.background;
-    Primary    = val.primary;
-    Secondary  = val.secondary;
-    Tertiary   = val.tertiary;
-
+    Primary = val.primary;
+    Secondary = val.secondary;
+    Tertiary = val.tertiary;
 }
 
 // Borrowed color pallet from this https://colorhunt.co/palette/f4f6fff3c623eb831710375c
@@ -55,4 +53,3 @@ pub var Tertiary = stream_renderer.Color{
     .g = colorBytetoFloat(131),
     .b = colorBytetoFloat(23),
 };
-
