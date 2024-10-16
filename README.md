@@ -1,3 +1,7 @@
+# ZigCV
+
+[![Check formating](https://github.com/Miniwoffer/zigcv/actions/workflows/format.yml/badge.svg)](https://github.com/Miniwoffer/zigcv/actions/workflows/format.yml)
+
 This is a simple cv and pdf renderer i wrote over the weekend, il immprove it as i go.
 
 to build:
