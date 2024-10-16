@@ -1,3 +1,4 @@
+
 const std = @import("std");
 const pdf = @import("pdf/object.zig");
 const projects = @import("projects.zig");
@@ -93,4 +94,8 @@ pub fn main() !void {
     my_objects.render(stdout) catch |err| {
         try stdout.print("err: {}\n", .{err});
     };
+}
+
+test {
+    std.testing.refAllDecls(@This());
 }
