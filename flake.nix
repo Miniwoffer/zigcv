@@ -71,7 +71,7 @@
       apps.fmt = env.app [] "zig fmt . \"$@\"";
 
       # nix run .#fmt --check
-      apps.fmt = env.app [] "zig fmt . --check \"$@\"";
+      apps.fmt-check = env.app [] "zig fmt . --check \"$@\"";
 
       # nix run .#deps
       apps.deps = env.showExternalDeps;
