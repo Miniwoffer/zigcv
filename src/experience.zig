@@ -16,7 +16,7 @@ const Experiences = []Experience;
 
 /// Renders experience.json
 pub fn render(allocator: Allocator, writer: anytype) !void {
-    const data = try std.fs.cwd().readFileAlloc(allocator, "./experience.json", 4096);
+    const data = try std.fs.cwd().readFileAlloc(allocator, "./data/experience.json", 4096);
     defer allocator.free(data);
 
     const parsed = try std.json.parseFromSlice(Experiences, allocator, data, .{.allocate = .alloc_always});

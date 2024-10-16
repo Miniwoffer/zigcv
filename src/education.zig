@@ -1,6 +1,8 @@
 const std = @import("std");
 const stream_renderer = @import("pdf/stream_renderer.zig");
 const colors = @import("colors.zig");
+const utils = @import("utils.zig");
+
 const Allocator = std.mem.Allocator;
 
 const Education = struct {
@@ -19,12 +21,11 @@ const Educations = []Education;
 
 /// Renders education.json
 pub fn render(allocator: Allocator, writer: anytype) !void {
-    const data = try std.fs.cwd().readFileAlloc(allocator, "./education.json", 4096);
-    defer allocator.free(data);
-
-    const parsed = try std.json.parseFromSlice(Educations, allocator, data, .{.allocate = .alloc_always});
-    try stream_renderer.centeredWrite(writer, "education");
+    const parsed = try utils.jsonLoadFile(Educations, allocator, "./data/education.json");
     defer parsed.deinit();
+
+    try stream_renderer.centeredWrite(writer, "education");
+
     // TODO: I should sort by "start" before rendering
     for (parsed.value) |exp| {
         try stream_renderer.println(writer,"{s} ({s}) - {d} -> {d}", .{exp.school.long, exp.school.short, exp.start, exp.end});

@@ -3,7 +3,7 @@ const pdf = @import("pdf/object.zig");
 const projects = @import("projects.zig");
 const experience = @import("experience.zig");
 const education = @import("education.zig");
-const aipoison = @import("aipoison.zig");
+const aipoison = @import("aiprompt.zig");
 const colors = @import("colors.zig");
 const build_info = @import("build_info");
 
