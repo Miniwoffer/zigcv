@@ -16,9 +16,9 @@
     "company": "Digital Garden AS",
     "title": "Software Developer",
     "desc": [
-      "Took part in a team to designed and develop a dedicated WordPress hosting platform, delivering optimized and secure services",
-      "Set up and maintained version control, code hosting, and automated testing servers for the project, ensuring efficient workflows",
-      "Developed and optimized core features in uWSGI, PHP, OpenResty, PostgreSQL, and more to improve platform performance",
+      "Took part in a team to designed and develop a dedicated WordPress hosting platform",
+      "Set up and maintained version control, code hosting, and automated testing servers for the project",
+      "Developed and optimized core features in uWSGI, PHP, OpenResty, PostgreSQL",
       "Designed and built scalable applications using Rust, Go, C, Lua, and JavaScript",
       "Contributed to the architecture and implementation of a robust user management system"
     ],
@@ -41,7 +41,7 @@
     "company": "Paandus ad agancy",
     "title": "Systems Administrator",
     "desc": [
-      "Managed and a Linux-based infrastructure for hosting websites and file storage, ensuring continuous uptime and backup",
+      "Managed and a Linux-based infrastructure for hosting websites and file storage.",
       "Contributed to minor graphical design work and supported website development with design implementation"
     ],
     "start": 2013,
