@@ -127,9 +127,9 @@ pub const Objects = struct {
         }
 
         const xref_start = cw.bytes_written;
-        const xref_count = self.objects.items.len;
+        const xref_count = self.objects.items.len + 1;
         // Write out trailer
-        try format(wr, "xref\n0 {d}\n", .{xref_count + 1});
+        try format(wr, "xref\n0 {d}\n", .{xref_count});
 
         // Start by creating document xref
         try format(wr, "{d:0>10} {d:0>5} f\n", .{ 0, 65535 });
